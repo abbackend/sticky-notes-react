@@ -1,39 +1,29 @@
 <img src="https://github.com/abbackend/portfolio/blob/master/channels4_banner.jpg" width="100%"/>
 
 # Sticky Notes React
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+Drag & Drop sticky notes App built with React JS.
 
-First, run the development server:
+<img src="demo.gif"/>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   Drag and Drop notes anywhere on screen
+-   Save note data, position and color in database
+-   Change note color at anytime
+-   Autogrow note size as data is input
+-   Autosave notes as you add data.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Setup instructions
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+-   Clone repo: `git clone <REPO URL>`
+-   Install dependencies and run server: `cd reponame` + `npm i` + `npm run dev`
+-   Setup Appwrite backend with database (See database details below)
+-   Create `.env` file (use `.env.example` as a reference) and update appwrite credentials
 
-## Learn More
+## Live Demo
+You can check out the live demo of this website [here](https://abbackend-sticky-notes.vercel.app).
 
-To learn more about Next.js, take a look at the following resources:
+## Authors
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [@abbackend](https://www.github.com/abbackend)
