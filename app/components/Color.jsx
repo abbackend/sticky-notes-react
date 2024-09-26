@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NoteContext } from "../context/NoteContext";
+import { NoteContext } from "@/app/context/NoteContext";
 
 const Color = ({ color }) => {
   const { setNotes, selectedNote } = useContext(NoteContext);
