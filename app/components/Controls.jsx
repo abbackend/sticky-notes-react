@@ -1,6 +1,6 @@
-import AddButton from "./AddButton";
-import colors from "../assets/colors.json";
-import Color from "./Color";
+import AddButton from "@/app/components/AddButton";
+import colors from "@/app/assets/colors.json";
+import Color from "@/app/components/Color";
 
 const Controls = () => {
   return (

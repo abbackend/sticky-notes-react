@@ -1,7 +1,7 @@
-import Plus from "../icons/Plus";
+import Plus from "@/app/icons/Plus";
 import { useRef, useContext } from "react";
-import colors from "../assets/colors.json";
-import { NoteContext } from "../context/NoteContext";
+import colors from "@/app/assets/colors.json";
+import { NoteContext } from "@/app/context/NoteContext";
 
 const AddButton = () => {
   const startingPos = useRef(10);

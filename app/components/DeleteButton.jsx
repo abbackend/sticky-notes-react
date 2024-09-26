@@ -1,5 +1,5 @@
-import { NoteContext } from "../context/NoteContext";
-import Trash from "../icons/Trash";
+import { NoteContext } from "@/app/context/NoteContext";
+import Trash from "@/app/icons/Trash";
 import { useContext } from "react";
 
 const DeleteButton = ({ noteId }) => {

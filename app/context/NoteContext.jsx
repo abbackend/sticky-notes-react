@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import Spinner from "../icons/Spinner";
+import Spinner from "@/app/icons/Spinner";
 
 export const NoteContext = createContext();
 

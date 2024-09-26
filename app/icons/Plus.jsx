@@ -1,4 +1,4 @@
-const Plus = ({ size = 24, color = "#FFFFFF" }) => {
+const Plus = ({ size = 24, color = "#FFFFFF", className = "" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +8,7 @@ const Plus = ({ size = 24, color = "#FFFFFF" }) => {
       stroke={color}
       fill="none"
       strokeWidth="2.5"
+      className={className}
     >
       <path strokeLinecap="round" d="M18 12H6M12 6v12"></path>
     </svg>

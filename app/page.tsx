@@ -1,7 +1,7 @@
 "use client";
 
-import NoteProvider from "./context/NoteContext";
-import NotePage from "./pages/NotePage";
+import NoteProvider from "@/app/context/NoteContext";
+import NotePage from "@/app/pages/NotePage";
 
 export default function Home() {
   return (
