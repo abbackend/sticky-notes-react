@@ -13,6 +13,7 @@ const TimerPage = () => {
   const [startTime, setStartTime] = useState('00:00')
   const [lunchStart, setLunchStart] = useState('00:00')
   const [lunchEnd, setLunchEnd] = useState('00:00')
+  const [lunchManual, setLunchManual] = useState('00:00')
   const [endTime, setEndTime] = useState('00:00')
   const [difference, setDifference] = useState(null)
   const [breaks, setBreaks] = useState([])
@@ -29,7 +30,8 @@ const TimerPage = () => {
     setBreaks((prevState) => [{
       id: breakId.current,
       start: '00:00',
-      end: '00:00'
+      end: '00:00',
+      manual: '00:00'
     }, ...prevState])
 
     breakId.current = breakId.current + 1;
@@ -49,8 +51,11 @@ const TimerPage = () => {
             case 'start':
               el.start = event.target.value
               break;
-            default:
+            case 'end':
               el.end = event.target.value
+              break;
+            default:
+              el.manual = event.target.value
           }
         }
 
@@ -70,7 +75,13 @@ const TimerPage = () => {
     const totalTime = end - start; // Total time worked in milliseconds
 
     // Calculate lunch time duration
-    const lunTime = lunEnd - lunStart; // Lunch duration in milliseconds
+    let lunTime = lunEnd - lunStart; // Lunch duration in milliseconds
+
+    // If manual is provided, adjust the time
+    if (lunchManual) {
+      let [manualHours, manualMinutes] = lunchManual.split(':').map(Number);
+      lunTime = (manualHours * 60 + manualMinutes) * 60 * 1000; // Convert to milliseconds
+    }
 
     // Initialize total working time with the total time minus lunch time
     let totalWorkingTime = totalTime - lunTime;
@@ -80,7 +91,14 @@ const TimerPage = () => {
     breaks.forEach((el) => {
       const breakStart = new Date(`1970-01-01T${el.start}:00`);
       const breakEnd = new Date(`1970-01-01T${el.end}:00`);
-      const breakDuration = breakEnd - breakStart; // Break duration in milliseconds
+      let breakDuration = breakEnd - breakStart; // Break duration in milliseconds
+
+      // If manual is provided, adjust the time
+      if (el.manual) {
+        let [manualHours, manualMinutes] = el.manual.split(':').map(Number);
+        breakDuration = (manualHours * 60 + manualMinutes) * 60 * 1000; // Convert to milliseconds
+      }
+
       breakTime += breakDuration; // Accumulate break durations
       totalWorkingTime -= breakDuration; // Deduct breaks from working time
     });
@@ -118,14 +136,6 @@ const TimerPage = () => {
   }, [copied])
 
   useEffect(() => {
-    if (difference) {
-      setTimeout(() => {
-        setDifference(null)
-      }, 3000);
-    }
-  }, [difference])
-
-  useEffect(() => {
     setEndTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
   }, [])
 
@@ -156,8 +166,6 @@ const TimerPage = () => {
                 <input
                   type="time"
                   className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
-                  min="09:00"
-                  max="18:00"
                   defaultValue={lunchStart}
                   onChange={(event) => setLunchStart(event.target.value)}
                 />
@@ -167,10 +175,17 @@ const TimerPage = () => {
                 <input
                   type="time"
                   className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
-                  min="09:00"
-                  max="18:00"
                   defaultValue={lunchEnd}
                   onChange={(event) => setLunchEnd(event.target.value)}
+                />
+              </div>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium">Manual</label>
+                <input
+                  type="time"
+                  className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
+                  defaultValue={lunchManual}
+                  onChange={(event) => setLunchManual(event.target.value)}
                 />
               </div>
             </div>
@@ -191,8 +206,6 @@ const TimerPage = () => {
                   <input
                     type="time"
                     className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
-                    min="09:00"
-                    max="18:00"
                     defaultValue={el.start}
                     onChange={(event) => changeBreak(event, el.id, 'start')}
                   />
@@ -202,10 +215,17 @@ const TimerPage = () => {
                   <input
                     type="time"
                     className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
-                    min="09:00"
-                    max="18:00"
                     defaultValue={el.end}
                     onChange={(event) => changeBreak(event, el.id, 'end')}
+                  />
+                </div>
+                <div className="w-full">
+                  <label className="block mb-2 text-sm font-medium">Manual</label>
+                  <input
+                    type="time"
+                    className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
+                    defaultValue={el.manual}
+                    onChange={(event) => changeBreak(event, el.id, 'manual')}
                   />
                 </div>
                 <div className="mt-6 cursor-pointer" onClick={() => removeBreak(el.id)}>
@@ -242,6 +262,9 @@ const TimerPage = () => {
                 </svg>
                 <span className="sr-only">Info</span>
                 <h3 className="text-lg font-medium">This is a warning alert</h3>
+                <span className="ml-auto cursor-pointer" onClick={() => setDifference(null)}>
+                  <Cross size={18} />
+                </span>
               </div>
               <div className="mt-2 mb-4 text-sm">
                 You still need to complete an additional <strong>{difference}</strong> hours to meet your daily working hours.
