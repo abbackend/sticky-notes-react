@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import DeleteButton from "./DeleteButton";
-import Spinner from "../icons/Spinner";
-import { autoGrow, setNewOffset, setZIndex, bodyParser } from "../utils.js";
-import { NoteContext } from "../context/NoteContext";
+import DeleteButton from "@/app/components/DeleteButton";
+import Spinner from "@/app/icons/Spinner";
+import { autoGrow, setNewOffset, setZIndex, bodyParser } from "@/app/utils.js";
+import { NoteContext } from "@/app/context/NoteContext";
 
 const NoteCard = ({ note }) => {
   const [position, setPosition] = useState(JSON.parse(note.position));
   const [saving, setSaving] = useState(false);
   const colors = JSON.parse(note.colors);
   const body = bodyParser(note.body);
-  const { setNotes, setSelectedNote } = useContext(NoteContext);
+  const { setNotes, selectedNote, setSelectedNote } = useContext(NoteContext);
 
   let mouseStartPos = { x: 0, y: 0 };
   const textAreaRef = useRef(null);
@@ -79,6 +79,13 @@ const NoteCard = ({ note }) => {
     autoGrow(textAreaRef);
     setZIndex(cardRef.current);
   }, [textAreaRef, cardRef]);
+
+  useEffect(() => {
+    cardRef.current.style.boxShadow = null;
+    if (selectedNote && selectedNote.id == note.id) {
+      cardRef.current.style.boxShadow = `0 4px 20px ${colors.colorHeader}`;
+    }
+  }, [selectedNote, colors]);
 
   return (
     <div
