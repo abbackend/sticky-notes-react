@@ -96,7 +96,10 @@ const TimerPage = () => {
       // If manual is provided, adjust the time
       if (el.manual) {
         let [manualHours, manualMinutes] = el.manual.split(':').map(Number);
-        breakDuration = (manualHours * 60 + manualMinutes) * 60 * 1000; // Convert to milliseconds
+        const breakTime = (manualHours * 60 + manualMinutes) * 60 * 1000; // Convert to milliseconds
+        if (breakTime > 0) {
+          breakDuration = breakTime;
+        }
       }
 
       breakTime += breakDuration; // Accumulate break durations
