@@ -156,8 +156,6 @@ const TimerPage = () => {
               <input
                 type="time"
                 className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
-                min="09:00"
-                max="18:00"
                 defaultValue={startTime}
                 autoFocus="true"
                 onChange={(event) => setStartTime(event.target.value)}
@@ -241,8 +239,6 @@ const TimerPage = () => {
               <input
                 type="time"
                 className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
-                min="09:00"
-                max="18:00"
                 value={endTime}
                 onChange={(event) => setEndTime(event.target.value)}
               />
