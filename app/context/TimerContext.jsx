@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { fakeData } from "@/app/assets/fakeTimerData";
 import Spinner from "@/app/icons/Spinner";
+import { bodyParser } from "@/app/utils.js";
 
 export const TimerContext = createContext();
 
@@ -63,7 +64,22 @@ const TimerProvider = ({ children }) => {
     return string;
   }
 
-  const contextData = { template, setTemplate, footer, updateFooter, setFooter };
+  const syncBodyFromNotes = async () => {
+    const notes = await JSON.parse(localStorage.getItem("notes"));
+    let body = await JSON.parse(fakeData.templateBody);
+    let header = await JSON.parse(fakeData.templateHeader)
+    if (notes && notes.length) {
+      body = "```" + await notes.reduce(function (current, accumulator) {
+        return current + bodyParser(accumulator.body) + '\n\n';
+      }, '\n');
+      body = body.substring(0, body.length - 1) + "```";
+    }
+
+    setTemplate(`${header}${body}`)
+    return true;
+  }
+
+  const contextData = { template, setTemplate, footer, updateFooter, setFooter, syncBodyFromNotes };
   return (
     <TimerContext.Provider value={contextData}>
       {loading ? (

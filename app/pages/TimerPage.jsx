@@ -6,12 +6,14 @@ import Check from "@/app/icons/Check.jsx";
 import Timer from "@/app/icons/Timer.jsx";
 import Plus from "@/app/icons/Plus.jsx";
 import Cross from "@/app/icons/Cross.jsx";
+import Spinner from "@/app/icons/Spinner.jsx";
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 
 const TimerPage = () => {
-  const { template, setTemplate, footer, updateFooter, setFooter } = useContext(TimerContext);
+  const { template, setTemplate, footer, updateFooter, setFooter, syncBodyFromNotes } = useContext(TimerContext);
   const [copied, setCopied] = useState(false);
+  const [synced, setSynced] = useState(true);
   const [startTime, setStartTime] = useState('00:00')
   const [lunchStart, setLunchStart] = useState('00:00')
   const [lunchEnd, setLunchEnd] = useState('00:00')
@@ -125,6 +127,15 @@ const TimerPage = () => {
     setDifference(null);
     if (totalWorkingTime < 8) {
       setDifference(formatTime(8 - totalWorkingTime))
+    }
+  }
+
+  const syncNotesAction = () => {
+    setSynced(false);
+    if (syncBodyFromNotes()) {
+      setTimeout(() => {
+        setSynced(true)
+      }, 1000);
     }
   }
 
@@ -276,8 +287,13 @@ const TimerPage = () => {
         </div>
         <div className="w-full p-4 bg-[#35363e] text-white rounded-lg shadow">
           <div className="flex items-center">
-            <h2 className="text-xl mr-3">Daily Report</h2>
-            {copied ? <Check /> : <Copy onClick={copyAction} />}
+            <div className="flex items-center">
+              <h2 className="text-xl mr-3">Daily Report</h2>
+              {copied ? <Check /> : <Copy onClick={copyAction} />}
+            </div>
+            <div className="ml-auto cursor-pointer" onClick={syncNotesAction}>
+              <Spinner size={26} defaultClass={synced ? "" : "animate-spin"} />
+            </div>
           </div>
           <div className="p-2 mt-2">
             <textarea

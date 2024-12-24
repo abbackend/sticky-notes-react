@@ -1,7 +1,7 @@
-const Spinner = ({ size = 20, color = "#fff" }) => {
+const Spinner = ({ size = 20, color = "#fff", defaultClass = "animate-spin" }) => {
   return (
     <svg
-      className="animate-spin"
+      className={defaultClass}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width={size}
