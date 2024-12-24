@@ -6,6 +6,8 @@ import Check from "@/app/icons/Check.jsx";
 import Timer from "@/app/icons/Timer.jsx";
 import Plus from "@/app/icons/Plus.jsx";
 import Cross from "@/app/icons/Cross.jsx";
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
 
 const TimerPage = () => {
   const { template, setTemplate, footer, updateFooter, setFooter } = useContext(TimerContext);
@@ -120,6 +122,7 @@ const TimerPage = () => {
       total: formatTime(totalHours)
     })
 
+    setDifference(null);
     if (totalWorkingTime < 8) {
       setDifference(formatTime(8 - totalWorkingTime))
     }
@@ -153,12 +156,12 @@ const TimerPage = () => {
           <form className="p-2">
             <div className="mt-3">
               <label className="block mb-2 text-sm font-medium">Start Time</label>
-              <input
-                type="time"
+              <TimePicker
+                disableClock={true}
+                value={startTime} onChange={setStartTime}
                 className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
-                defaultValue={startTime}
-                autoFocus="true"
-                onChange={(event) => setStartTime(event.target.value)}
+                autoFocus={true}
+                format="hh:mm a"
               />
             </div>
             <div className="mt-3 flex gap-3">
@@ -236,11 +239,11 @@ const TimerPage = () => {
             ))}
             <div className="mt-3">
               <label className="block mb-2 text-sm font-medium">End Time</label>
-              <input
-                type="time"
+              <TimePicker
+                disableClock={true}
+                value={endTime} onChange={setEndTime}
                 className="rounded bg-[#5c5c61] text-white/70 leading-none w-full text-sm p-2.5"
-                value={endTime}
-                onChange={(event) => setEndTime(event.target.value)}
+                format="hh:mm a"
               />
             </div>
             <div className="mt-6">
